@@ -1,0 +1,27 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 15px;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  margin: 0 10px;
+  color: #100a0a;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #f61e3e;
+  color: #fff;
+}
+
+div {
+  display: flex;
+}
+

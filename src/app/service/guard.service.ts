@@ -8,12 +8,12 @@ export const userGuard: CanActivateFn = (route, state) => {
   return true; // allow accessing the endpoint
 };
 
-export const adminGuard: CanActivateFn = (route, state) => {
-  // Check if the user is "logged in" as an admin based on a backend verification or local state
-  if (localStorage.getItem("isAdmin") === "true") {
-    return true; // allow accessing admin endpoints
-  } else {
-    inject(Router).navigate(['/login']);
-    return false; // not allowing if not admin
-  }
-};
+// export const adminGuard: CanActivateFn = (route, state) => {
+//   // Check if the user is "logged in" as an admin based on a backend verification or local state
+//   if (localStorage.getItem("isAdmin") === "true") {
+//     return true; // allow accessing admin endpoints
+//   } else {
+//     inject(Router).navigate(['/login']);
+//     return false; // not allowing if not admin
+//   }
+// };

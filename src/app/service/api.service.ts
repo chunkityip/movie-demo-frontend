@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { EventEmitter, Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
-  private static BASE_URL = 'http://localhost:2424'; // Adjust based on your backend's port
+  private static BASE_URL = 'http://localhost:8080'; // Adjust based on your backend's port
+
 
   constructor(private http: HttpClient) { }
 
@@ -21,5 +22,7 @@ export class ApiService {
   loginUser(loginDetails: any): Observable<any> {
     return this.http.post(`${ApiService.BASE_URL}/user/login`, loginDetails);
   }
+
+
 }
 
