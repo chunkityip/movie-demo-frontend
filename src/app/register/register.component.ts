@@ -29,6 +29,7 @@ export class RegisterComponent {
     }
 
     try {
+      //testing
       const response = await firstValueFrom(this.apiService.registerUser(this.formData));
       this.showMessage('User Successfully registered. Username will be {' + this.formData.name + '}');
       this.router.navigate(['/login']);
