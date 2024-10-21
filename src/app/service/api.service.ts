@@ -6,23 +6,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ApiService {
-  private static BASE_URL = 'http://localhost:8080'; // Adjust based on your backend's port
-
+  private static BASE_URL = 'http://localhost:8080'; // Ensure this is correct
 
   constructor(private http: HttpClient) { }
 
-  /*** Register & User login */
-
-  // User registration (matches backend register endpoint)
   registerUser(registration: any): Observable<any> {
     return this.http.post(`${ApiService.BASE_URL}/user/register`, registration);
   }
 
-  // User login (matches backend login endpoint)
   loginUser(loginDetails: any): Observable<any> {
     return this.http.post(`${ApiService.BASE_URL}/user/login`, loginDetails);
   }
-
-
 }
+
 

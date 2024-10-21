@@ -24,26 +24,20 @@ export class RegisterComponent {
 
   async handleSubmit() {
     if (!this.formData.name) {
-      this.showMessage("Field required")
+      this.showMessage("Field required");
       return;
     }
 
     try {
-      // Call your registration API here (assuming async for now)
-      // await firstValueFrom(this.apiService.registerUser(this.formData));
-
-      this.showMessage(`User successfully registered. Username will be {${this.formData.name}}`);
-
-      // Navigate to login after a short delay to allow the user to read the message
-      setTimeout(() => {
-        this.router.navigate(['/login']);
-      }, 2000);
-
+      const response = await firstValueFrom(this.apiService.registerUser(this.formData));
+      this.showMessage('User Successfully registered. Username will be {' + this.formData.name + '}');
+      this.router.navigate(['/login']);
     } catch (error: any) {
-      console.log(error);
+      console.error('Error during registration:', error);
       this.showMessage(error.error?.message || error.message || 'Unable to register');
     }
   }
+
 
 
   showMessage(message: string) {
