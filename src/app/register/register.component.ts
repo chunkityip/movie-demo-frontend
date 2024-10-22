@@ -30,7 +30,7 @@ export class RegisterComponent {
 
     try {
       // Call your registration API here (assuming async for now)
-      // await firstValueFrom(this.apiService.registerUser(this.formData));
+      await firstValueFrom(this.apiService.registerUser(this.formData));
 
       this.showMessage(`User successfully registered. Username will be {${this.formData.name}}`);
 
