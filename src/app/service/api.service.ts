@@ -10,6 +10,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
+  /** Auth */
   registerUser(registration: any): Observable<any> {
     return this.http.post(`${ApiService.BASE_URL}/user/register`, registration);
   }
@@ -17,6 +18,11 @@ export class ApiService {
   loginUser(loginDetails: any): Observable<any> {
     return this.http.post(`${ApiService.BASE_URL}/user/login`, loginDetails);
   }
+
+  /** Shopping cart */
+  createOrder(orderRequest: any): Observable<any> {
+      return this.http.post(`${ApiService.BASE_URL}/order/create`, orderRequest);
+    }
 }
 
 
