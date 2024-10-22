@@ -1,17 +1,31 @@
 import { Component } from '@angular/core';
+import { MovieShowingComponent } from '../movie-showing/movie-showing.component';
+import { MovieShowing } from '../movieshowing';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [MovieShowingComponent, CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  // image: string;
+  readonly baseUrl = 'https://angular.dev/assets/images/tutorials/common';
 
-  // constructor() {
-  //   // Set the image path
-  //   this.image = 'image.jpg'; // Update the path as necessary
-  // }
+  movieShowingList: MovieShowing[] = [
+    {
+      id: 0,
+      name: 'Star Wars',
+      description: 'Once Upon a Time',
+      photo: `${this.baseUrl}/example-house.jpg`,
+    },
+    {
+      id: 1,
+      name: 'Clone Wars',
+      description: 'Once Upon a Time',
+      photo: `${this.baseUrl}/example-house.jpg`,
+    },
+  ];
 }
