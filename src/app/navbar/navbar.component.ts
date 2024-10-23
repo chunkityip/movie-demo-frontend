@@ -20,14 +20,6 @@ export class NavbarComponent {
     this.router.navigate(['/home'], { queryParams: { search: this.searchValue } });
   }
 
-//   handleLogout() {
-//       const confirm = window.confirm("Are you sure you want to log out? ")
-//       if (confirm) {
-//         this.apiService.logout();
-//         this.router.navigate(['/login'])
-//       }
-//     }
-
   handleLogin() {
     this.router.navigate(['/login']);
   }
