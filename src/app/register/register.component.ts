@@ -24,7 +24,7 @@ export class RegisterComponent {
 
   async handleSubmit() {
     if (!this.formData.name) {
-      this.showMessage("Field required")
+      this.showMessage("Field required");
       return;
     }
 
