@@ -5,7 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin/admin.component';
-
+import { SeatSelectionComponent } from './seat/seat.component';
 
 export const routes: Routes = [
   /**PUBLIC ROUTES */
@@ -17,6 +17,9 @@ export const routes: Routes = [
 
   /**ADMIN ROUTES */
   {path: 'admin', component: AdminComponent},
+
+  /**MOVIE SHOWING */
+  { path: 'seat', component: SeatSelectionComponent }
 ];
 
 

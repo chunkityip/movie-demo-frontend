@@ -47,7 +47,7 @@ export class LoginComponent {
 
       } catch (error: any) {
         console.log(error);
-        this.showMessage(error.error?.message || error.message || 'Unable to login');
+        window.alert('Username not found! Unable to login!');
       }
     }
 
