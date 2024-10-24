@@ -9,7 +9,20 @@ export class ApiService {
   private static BASE_URL = 'http://localhost:8080';
   private adminName: string | null = ''; // Store admin name
 
+  // Event emitter for auth status change
+  public authStatusChanged: EventEmitter<void> = new EventEmitter<void>();
+
   constructor(private http: HttpClient) {}
+
+  // Set and Get Admin Name
+  setAdminName(name: string): void {
+    this.adminName = name;
+    this.authStatusChanged.emit(); // Emit change whenever adminName is updated
+  }
+
+  getAdminName(): string | null {
+    return this.adminName;
+  }
 
   /** Auth */
   registerUser(registration: any): Observable<any> {
@@ -20,24 +33,14 @@ export class ApiService {
     return this.http.post(`${ApiService.BASE_URL}/user/login`, loginDetails);
   }
 
-  // Set and Get Admin Name
-  setAdminName(name: string): void {
-    this.adminName = name;
+  getUserProfile(adminId: string): Observable<any> {
+    return this.http.get(`${ApiService.BASE_URL}/user/profile/${adminId}`);
   }
-
-  getAdminName(): string | null {
-    return this.adminName;
-  }
-
-  /** Fetch User Profile */
-    getUserProfile(id: number): Observable<any> {
-        return this.http.get(`${ApiService.BASE_URL}/user/profile/${id}`);
-    }
-
 
   /** Shopping cart */
   createOrder(orderRequest: any): Observable<any> {
     return this.http.post(`${ApiService.BASE_URL}/order/create`, orderRequest);
   }
 }
+
 
