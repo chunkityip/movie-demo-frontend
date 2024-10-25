@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { MovieShowingComponent } from '../movie-showing/movie-showing.component';
 import { MovieShowing } from '../movieshowing';
 import { CommonModule } from '@angular/common';
+import { DataDisplayComponent } from '../data-display/data-display.component';
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MovieShowingComponent, CommonModule],
+  imports: [MovieShowingComponent, CommonModule, DataDisplayComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
