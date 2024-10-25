@@ -1,0 +1,30 @@
+<div class="main-container">
+  <div class="content-card">
+    <div class="status-bar"></div>
+    <div class="success-message">
+      <div class="check-icon">✓</div>
+      <h2>Movie Created Successfully</h2>
+    </div>
+    <div class="status-bar"></div>
+
+    <div class="movie-info">
+      <h3>Here is the movie info:</h3>
+
+      <div class="movie-details">
+        <img [src]="ticket.imageUrl" [alt]="ticket.title" class="movie-poster">
+        <div class="movie-text">
+          <span class="movie-title">{{ticket.title}}</span>
+          <span class="price">Price: ${{ticket.price}}</span>
+        </div>
+      </div>
+
+      <div class="showings-prompt">
+        <p>Would you like to add Showings for this movie now?</p>
+        <div class="action-buttons">
+          <button class="btn-add-showings" (click)="onAddShowings()">Add Showings</button>
+          <button class="btn-not-now" (click)="onNotNow()">Not Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
