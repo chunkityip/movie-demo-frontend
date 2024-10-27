@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../service/api.service';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { ApiService } from '../../service/api.service';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './admin.component.html',
-  styleUrl: './admin.component.css'  // Changed from styleUrls to styleUrl for Angular 18
+  styleUrl: './admin.component.css'
 })
 export class AdminComponent implements OnInit {
   adminName: string | null = null;

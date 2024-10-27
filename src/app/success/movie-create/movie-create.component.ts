@@ -8,7 +8,7 @@ interface Movie {
   title: string;
   description: string;
   coverImageBase64: string;
-  // price?: number; // Add if you have price in your backend
+  price?: number;
 }
 
 @Component({
@@ -28,9 +28,8 @@ export class MovieCreateComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Get the movie ID from route parameters
     this.route.params.subscribe(params => {
-      const movieId = +params['id']; // Convert string to number
+      const movieId = +params['id'];
       if (movieId) {
         this.loadMovie(movieId);
       }
@@ -49,14 +48,13 @@ export class MovieCreateComponent implements OnInit {
   }
 
   onAddShowings() {
-    // Navigate to showings component with movie ID
     if (this.movie) {
-      this.router.navigate(['/add-showings', this.movie.id]);
+      this.router.navigate(['/admin/add-showing', this.movie.id]);
     }
   }
 
   onNotNow() {
-    // Navigate back to movies list
-    this.router.navigate(['/movies']);
+    // Navigate to admin profile page
+    this.router.navigate(['/admin']);
   }
 }
