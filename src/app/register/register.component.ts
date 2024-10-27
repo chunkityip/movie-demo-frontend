@@ -29,16 +29,21 @@ export class RegisterComponent {
     }
 
     try {
-      //testing
-      const response = await firstValueFrom(this.apiService.registerUser(this.formData));
-      this.showMessage('User Successfully registered. Username will be {' + this.formData.name + '}');
-      this.router.navigate(['/login']);
+      // Call your registration API here (assuming async for now)
+      await firstValueFrom(this.apiService.registerUser(this.formData));
+
+      window.alert(`User successfully registered. Username will be " ${this.formData.name} "`);
+
+      // Navigate to login after a short delay to allow the user to read the message
+      setTimeout(() => {
+        this.router.navigate(['/login']);
+      });
+
     } catch (error: any) {
-      console.error('Error during registration:', error);
+      console.log(error);
       this.showMessage(error.error?.message || error.message || 'Unable to register');
     }
   }
-
 
 
   showMessage(message: string) {
@@ -50,12 +55,7 @@ export class RegisterComponent {
       if (messageElement) {
         messageElement.classList.add('fade-out');
       }
-    }, 2500); // Start fading out after 2.5 seconds
-
-    // Remove the message after the animation
-    setTimeout(() => {
-      this.message = null;
-    }, 5000);
+    });
   }
 
 }

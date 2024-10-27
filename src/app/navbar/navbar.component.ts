@@ -15,18 +15,21 @@ export class NavbarComponent {
   constructor(private readonly apiService: ApiService, private router: Router) {}
 
   searchValue: string = '';
+  isAdminLoggedIn: boolean = false; // Track if the admin is logged in
+
+  ngOnInit(): void {
+    // Check if admin is logged in by checking the stored admin name
+    this.isAdminLoggedIn = !!this.apiService.getAdminName();
+
+    // Listen for changes in authentication status
+    this.apiService.authStatusChanged.subscribe(() => {
+      this.isAdminLoggedIn = !!this.apiService.getAdminName();
+    });
+  }
 
   handleSearchSubmit() {
     this.router.navigate(['/home'], { queryParams: { search: this.searchValue } });
   }
-
-//   handleLogout() {
-//       const confirm = window.confirm("Are you sure you want to log out? ")
-//       if (confirm) {
-//         this.apiService.logout();
-//         this.router.navigate(['/login'])
-//       }
-//     }
 
   handleLogin() {
     this.router.navigate(['/login']);
@@ -36,7 +39,14 @@ export class NavbarComponent {
     this.router.navigate(['/register']);
   }
 
-
+  handleLogout() {
+    const confirm = window.confirm("Are you sure you want to log out?");
+    if (confirm) {
+      this.apiService.setAdminName(''); // Clear the admin name to log out
+      this.router.navigate(['/login']);
+      this.apiService.authStatusChanged.emit();
+    }
+  }
 }
 
 
