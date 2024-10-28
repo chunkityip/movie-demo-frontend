@@ -1,10 +1,44 @@
+
+
 h1{
-    margin-bottom: 15%;
+    margin-top: 100px; /* Remove default margin */
+    padding: 0; /* Remove padding if any */
+    margin-bottom: 200px; /* Keep the bottom margin as you want */
+    text-align: left; /* Align text to the left */
+    }
+
+.home-page {
+    width: 100vw;
+    margin: 20px;
+    margin-top: 900px;
+
+    .movie-banner {
+    margin-top: 150px;
+    width: 100vw;
+    overflow: hidden; /* Optional: to hide overflow if the image doesn't fit perfectly */
+    }
+
+    .movie-banner img {
+    width: 60vw; /* Stretch the image to fit the width of the parent */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove bottom space/gap */
+    }
+
+
+
 }
 
-.movie-showings {
-    display: flex;              /* Enable flexbox layout */
-    flex-direction: row;       /* Align items horizontally */
-    flex-wrap: wrap;           /* Optional: wrap items if they exceed the container width */
-    gap: 10px;                 /* Optional: space between items */
+.feature-movies {
+    margin: 10px;
+    display: flex;
+}
+
+
+
+:host{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 55vh;
 }
