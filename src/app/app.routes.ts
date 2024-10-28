@@ -15,6 +15,7 @@ export const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'cart', component: CartComponent},
   {path: 'home', component: HomeComponent},
+  {path: 'movies', component: MovieSelectionComponent},
 
 
   /**ADMIN ROUTES */
