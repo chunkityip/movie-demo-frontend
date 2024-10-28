@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from '../../service/api.service';
 
-interface MovieTicket {
-  id: string;
+interface Movie {
+  id: number;
   title: string;
-  price: number;
-  imageUrl: string;
+  description: string;
+  coverImageBase64: string;
+  price?: number;
 }
 
 @Component({
@@ -13,24 +16,45 @@ interface MovieTicket {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './movie-create.component.html',
-  styleUrl: './movie-create.component.css'
+  styleUrls: ['./movie-create.component.css']
 })
-export class MovieCreateComponent {
-  ticket: MovieTicket = {
-    id: '12345',
-    title: 'Star Wars: The Phantom Menace',
-    price: 15.99,
-    imageUrl: 'https://m.media-amazon.com/images/M/MV5BODVhNGIxOGItYWNlMi00YTA0LWI3NTctZmQxZGUwZDEyZWI4XkEyXkFqcGc@._V1_.jpg'
+export class MovieCreateComponent implements OnInit {
+  movie: Movie | null = null;
 
-  };
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private apiService: ApiService
+  ) {}
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      const movieId = +params['id'];
+      if (movieId) {
+        this.loadMovie(movieId);
+      }
+    });
+  }
+
+  private loadMovie(id: number) {
+    this.apiService.getMovieById(id).subscribe({
+      next: (movie) => {
+        this.movie = movie;
+      },
+      error: (error) => {
+        console.error('Error loading movie:', error);
+      }
+    });
+  }
 
   onAddShowings() {
-    // Implement add showings logic
-    console.log('Adding showings...');
+    if (this.movie) {
+      this.router.navigate(['/admin/add-showing', this.movie.id]);
+    }
   }
 
   onNotNow() {
-    // Implement not now logic
-    console.log('Not now clicked...');
+    // Navigate to admin profile page
+    this.router.navigate(['/admin']);
   }
 }

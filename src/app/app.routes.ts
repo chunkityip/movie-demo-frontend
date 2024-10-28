@@ -6,9 +6,8 @@ import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin/admin.component';
 import { SeatSelectionComponent } from './seat/seat.component';
-import { PaymentSuccessComponent } from './success/payment-success/payment-success.component';
+import { AddMovieComponent } from './admin/add-movie/add-movie.component';
 import { MovieCreateComponent } from './success/movie-create/movie-create.component';
-import { ShowingAddComponent } from './success/showing-add/showing-add.component';
 
 export const routes: Routes = [
   /**PUBLIC ROUTES */
@@ -20,15 +19,11 @@ export const routes: Routes = [
 
   /**ADMIN ROUTES */
   {path: 'admin', component: AdminComponent},
+  {path: 'admin/add-movie', component: AddMovieComponent},
+  { path: 'movie-create/:id', component: MovieCreateComponent },
 
   /**MOVIE SHOWING */
-  { path: 'seat', component: SeatSelectionComponent },
-
-  /**SUCCESS PAGE */
-  { path: 'payment-success', component: PaymentSuccessComponent },
-  { path: 'movie-create' , component: MovieCreateComponent },
-  { path: 'showing-add' , component: ShowingAddComponent},
-
+  { path: 'seat', component: SeatSelectionComponent }
 ];
 
 
