@@ -8,6 +8,7 @@ import { AdminComponent } from './admin/admin/admin.component';
 import { SeatSelectionComponent } from './seat/seat.component';
 import { AddMovieComponent } from './admin/add-movie/add-movie.component';
 import { MovieCreateComponent } from './success/movie-create/movie-create.component';
+import { MovieSelectionComponent } from './movie-selection/movie-selection.component';
 
 export const routes: Routes = [
   /**PUBLIC ROUTES */
