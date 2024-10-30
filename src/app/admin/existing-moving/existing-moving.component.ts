@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../service/api.service';
 
-
 interface Movie {
   id: number;
   title: string;
@@ -22,12 +21,11 @@ interface Movie {
 })
 
 export class ExistingMovieComponent implements OnInit {
-  movie: Movie[] = [];
+  movies: Movie[] = [];
   currentMovieIndex = 0;
   selectedDate: string = '';
   selectedTime: string = '';
 
-  // Add these new properties
   weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   calendarDays: number[] = [];
 
@@ -40,20 +38,29 @@ export class ExistingMovieComponent implements OnInit {
     { time: '8:00 pm', available: true }
   ];
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient, private apiService: ApiService) {}
 
   ngOnInit(): void {
-    this.loadMovie();
+    this.loadMovies();
     this.calendarDays = Array.from({ length: 31 }, (_, i) => i + 1);
   }
 
-  private loadMovie(id: number) {
-      this.apiService.getMovieById(id).subscribe({
-        next: (movie) => {
-          this.movie = movie;
-        }
-      });
+  loadMovies(): void {
+    this.apiService.getAllMovies().subscribe({
+      next: (movies) => {
+        this.movies = movies;
+      },
+      error: (err) => {
+        console.error('Error fetching movies:', err);
+      }
+    });
+  }
+
+  nextMovie(): void {
+    if (this.currentMovieIndex < this.movies.length - 1) {
+      this.currentMovieIndex++;
     }
+  }
 
   previousMovie(): void {
     if (this.currentMovieIndex > 0) {
@@ -75,16 +82,15 @@ export class ExistingMovieComponent implements OnInit {
       return;
     }
 
-    // Log the selected data for demonstration
     console.log('New Showing Created:', {
-      movieId: this.movie[this.currentMovieIndex].id,
-      movieTitle: this.movie[this.currentMovieIndex].title,
+      movieId: this.movies[this.currentMovieIndex].id,
+      movieTitle: this.movies[this.currentMovieIndex].title,
       date: this.selectedDate,
       time: this.selectedTime
     });
 
-    // Navigate back to admin page
     alert('Showing created successfully! (Demo)');
     this.router.navigate(['/admin']);
   }
 }
+

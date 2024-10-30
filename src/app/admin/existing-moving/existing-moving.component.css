@@ -28,6 +28,48 @@ h2 {
   margin: 2rem 0;
 }
 
+.movie-info {
+  padding: 1.5rem;
+}
+
+.movie-info h3 {
+  margin-top: 0;
+  color: #333;
+  font-weight: normal;
+}
+
+.movie-details {
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.movie-poster {
+  width: 120px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.movie-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.movie-title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.movie-description {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+
 .carousel-button {
   background: none;
   border: none;

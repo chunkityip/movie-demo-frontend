@@ -10,26 +10,30 @@
         &#8249;
       </button>
 
-      <div class="movie-list">
-        <h3>Here are the movies:</h3>
-        <div *ngFor="let movie of movies" class="movie-info">
-          <div class="movie-details">
-            <img [src]="movie.coverImageBase64" [alt]="movie.title" class="movie-poster">
-            <div class="movie-text">
-              <span class="movie-title">{{movie.title}}</span>
-              <span class="movie-description">{{movie.description}}</span>
-            </div>
+      <div class="movie-info" *ngIf="movies.length > 0">
+        <h3>Here is the movie info:</h3>
+        <div class="movie-details">
+          <!-- Access the current movie's coverImageBase64 using the currentMovieIndex -->
+          <img
+            *ngIf="movies[currentMovieIndex].coverImageBase64"
+            [src]="'data:image/jpeg;base64,' + movies[currentMovieIndex].coverImageBase64"
+            class="movie-poster"
+          />
+          <div class="movie-text">
+            <span class="movie-title">{{ movies[currentMovieIndex].title }}</span>
+            <span class="movie-description">{{ movies[currentMovieIndex].description }}</span>
+            <span>{{ movies[currentMovieIndex].coverImageBase64 }}</span>
           </div>
         </div>
       </div>
 
-
-      <button class="carousel-button next" (click)="loadMovies()"
-              [class.disabled]="currentMovieIndex >= movies.length - 3">
+      <button class="carousel-button next" (click)="nextMovie()"
+              [class.disabled]="currentMovieIndex >= movies.length - 1">
         &#8250;
       </button>
     </div>
   </div>
+
 
   <div class="section">
     <h2>Choose a Date and the Time for the New Showing:</h2>
