@@ -10,14 +10,21 @@
         &#8249;
       </button>
 
-      <div class="movie-cards">
-        <div class="movie-card" *ngFor="let movie of movies.slice(currentMovieIndex, currentMovieIndex + 3); let i = index">
-          <img [src]="movie.coverImage" [alt]="movie.title">
-          <p class="movie-title">{{movie.title}}</p>
+      <div class="movie-list">
+        <h3>Here are the movies:</h3>
+        <div *ngFor="let movie of movies" class="movie-info">
+          <div class="movie-details">
+            <img [src]="movie.coverImageBase64" [alt]="movie.title" class="movie-poster">
+            <div class="movie-text">
+              <span class="movie-title">{{movie.title}}</span>
+              <span class="movie-description">{{movie.description}}</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <button class="carousel-button next" (click)="nextMovie()"
+
+      <button class="carousel-button next" (click)="loadMovies()"
               [class.disabled]="currentMovieIndex >= movies.length - 3">
         &#8250;
       </button>
@@ -29,13 +36,13 @@
 
     <div class="datetime-container">
       <div class="calendar">
-        <div class="calendar-header">October</div>
+        <div class="calendar-header">November</div>
         <div class="calendar-grid">
           <div class="weekday" *ngFor="let day of weekDays">{{day}}</div>
           <div class="day"
                *ngFor="let day of calendarDays"
-               [class.active]="selectedDate === '2024-10-' + day"
-               (click)="selectDate('2024-10-' + day)">
+               [class.active]="selectedDate === '2024-11-' + day"
+               (click)="selectDate('2024-11-' + day)">
             {{day}}
           </div>
         </div>
