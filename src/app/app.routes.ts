@@ -10,7 +10,7 @@ import { AddMovieComponent } from './admin/add-movie/add-movie.component';
 import { MovieCreateComponent } from './success/movie-create/movie-create.component';
 import { MovieSelectionComponent } from './movie-selection/movie-selection.component';
 import { AddShowingComponent } from './admin/add-showing/add-showing.component';
-import { ExistingMovieComponent } from './admin/existing-moving/existing-moving.component';
+// import { ExistingMovieComponent } from './admin/existing-moving/existing-moving.component';
 
 
 
@@ -28,7 +28,7 @@ export const routes: Routes = [
   {path: 'admin/add-movie', component: AddMovieComponent},
   {path: 'movie-create/:id', component: MovieCreateComponent },
   {path: 'admin/add-showing', component: AddShowingComponent},
-  {path: 'admin/existing-movie', component: ExistingMovieComponent},
+//   {path: 'admin/existing-movie', component: ExistingMovieComponent},
 
 
   /**MOVIE SHOWING */
