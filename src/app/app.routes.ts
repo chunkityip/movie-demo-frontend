@@ -11,7 +11,8 @@ import { MovieSelectionComponent } from './movie-selection/movie-selection.compo
 import { AddShowingComponent } from './admin/add-showing/add-showing.component';
 import { ExistingMovieComponent } from './admin/existing-moving/existing-moving.component';
 import { DataAnalyzeComponent } from './admin/data-analyze/data-analyze.component';
-import { CardPaymentComponent } from './card-payment/card-payment.component';
+// import { CardPaymentComponent } from './card-payment/card-payment.component';
+import { PaymentSuccessComponent } from './success/payment-success/payment-success.component';
 
 export const routes: Routes = [
   // Public Routes
@@ -26,13 +27,18 @@ export const routes: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'admin/add-movie', component: AddMovieComponent },
   { path: 'movie-create/:id', component: MovieCreateComponent },
+
   { path: 'admin/add-showing', component: AddShowingComponent },
   { path: 'admin/existing-movie', component: ExistingMovieComponent },
   { path: 'admin/data-analyze', component: DataAnalyzeComponent },
-  { path: 'payment' , component: CardPaymentComponent},
+
+
 
   // Movie Showing
   { path: 'seat', component: SeatSelectionComponent },
+
+  // User payment
+  { path: 'payment-success' , component: PaymentSuccessComponent },
 
   // Catch-all route for 404
   { path: '**', redirectTo: 'home' }

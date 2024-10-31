@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { MovieShowingComponent } from '../movie-showing/movie-showing.component';
 import { FormsModule } from '@angular/forms';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movie-selection',
@@ -14,9 +13,11 @@ import { FormsModule } from '@angular/forms';
 })
 export class MovieSelectionComponent {
   httpClient = inject(HttpClient);
+  router = inject(Router);
+
   data: any[] = [];
-  searchQuery: string = ''; // Property to hold the search input
-  filteredMovies: any[] = []; // Property to hold the filtered results
+  searchQuery: string = '';
+  filteredMovies: any[] = [];
 
   ngOnInit(): void {
     this.fetchData();
@@ -27,30 +28,33 @@ export class MovieSelectionComponent {
       .subscribe((data: any) => {
         console.log(data);
         this.data = data;
-        this.filteredMovies = data; // Initialize filteredMovies with all data
+        this.filteredMovies = data;
       });
   }
 
   searchMovies() {
-    console.log('Search Query:', this.searchQuery); // Debugging line
+    console.log('Search Query:', this.searchQuery);
     if (this.searchQuery.trim() === '') {
-      this.filteredMovies = this.data; // Show all movies if search is empty
+      this.filteredMovies = this.data;
     } else {
-      this.filteredMovies = this.data.filter(post => 
+      this.filteredMovies = this.data.filter(post =>
         post.title.toLowerCase().includes(this.searchQuery.toLowerCase())
-      ); 
+      );
     }
-    console.log('Filtered Movies:', this.filteredMovies); // Debugging line
+    console.log('Filtered Movies:', this.filteredMovies);
   }
 
-  fetchMovieDetails(movieId: number) {
+  navigateToSeatSelection(movieId: number) {
+    // First fetch movie details
     this.httpClient.get(`http://localhost:8080/movie/${movieId}`)
       .subscribe((data: any) => {
         console.log('Movie details:', data);
-        // Here you can handle the received data, e.g., navigate to a details page or display in a modal
+        // Navigate to seat selection with movie ID as parameter
+        this.router.navigate(['/seat'], {
+          queryParams: { movieId: movieId }
+        });
       }, error => {
         console.error('Error fetching movie details:', error);
       });
   }
-
 }

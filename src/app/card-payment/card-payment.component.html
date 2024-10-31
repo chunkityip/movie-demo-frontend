@@ -1,28 +1,61 @@
-<form (ngSubmit)="onSubmit()" #paymentForm="ngForm">
-    <div>
-        <label for="name">Name on Card:</label>
-        <input type="text" id="name" required [(ngModel)]="paymentModel.name" name="name">
+<div class="payment-container">
+  <form (ngSubmit)="onSubmit()" #paymentForm="ngForm" class="payment-form">
+    <div class="form-group">
+      <label for="name">Name on Card:</label>
+      <input
+        type="text"
+        id="name"
+        required
+        [(ngModel)]="paymentModel.name"
+        name="name">
     </div>
 
-    <div>
-        <label for="card-number">Card Number:</label>
-        <input type="text" id="card-number" required [(ngModel)]="paymentModel.cardNumber" name="cardNumber">
+    <div class="form-group">
+      <label for="card-number">Card Number:</label>
+      <input
+        type="text"
+        id="card-number"
+        required
+        [(ngModel)]="paymentModel.cardNumber"
+        name="cardNumber">
     </div>
 
-    <div>
-        <label for="expiry">Expiry Date (MM/YY):</label>
-        <input type="text" id="expiry" required [(ngModel)]="paymentModel.expiry" name="expiry">
+    <div class="form-group">
+      <label for="expiry">Expiry Date (MM/YY):</label>
+      <input
+        type="text"
+        id="expiry"
+        required
+        [(ngModel)]="paymentModel.expiry"
+        name="expiry">
     </div>
 
-    <div>
-        <label for="cvv">CVV:</label>
-        <input type="text" id="cvv" required [(ngModel)]="paymentModel.cvv" name="cvv">
+    <div class="form-group">
+      <label for="cvv">CVV:</label>
+      <input
+        type="password"
+        id="cvv"
+        required
+        [(ngModel)]="paymentModel.cvv"
+        name="cvv">
     </div>
 
-    <div>
-        <label for="amount">Amount:</label>
-        <input type="text" id="amount" required [(ngModel)]="paymentModel.amount" name="amount">
+    <div class="form-group">
+      <label for="amount">Amount:</label>
+      <input
+        type="number"
+        id="amount"
+        required
+        [(ngModel)]="paymentModel.amount"
+        name="amount"
+        [value]="total">
     </div>
 
-    <button type="submit" [disabled]="!paymentForm.form.valid">Pay Now</button>
-</form>
+    <button
+      type="submit"
+      [disabled]="!paymentForm.form.valid"
+      class="submit-button">
+      Pay Now
+    </button>
+  </form>
+</div>

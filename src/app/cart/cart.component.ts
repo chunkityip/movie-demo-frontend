@@ -19,6 +19,8 @@ export class CartComponent implements OnInit {
   message: string | null = null;
   totalPrice: number = 10;
 
+  showCardDetails = false;
+
   ngOnInit(): void {
     this.loadDummyCart(); // Use dummy data
   }
@@ -56,21 +58,19 @@ export class CartComponent implements OnInit {
   }
 
   clearCart(): void {
-    this.cartService.clearCart();
-    this.loadCart();
-  }
+      this.cartService.clearCart();
+      this.loadCart();
+    }
 
-  handleCheckOut(): void {
-    this.message = "You need to login before you can place an order";
-    setTimeout(() => {
-      this.message = null;
-      this.router.navigate(['/payment']);
-    }, 3000);
-  }
+    handleCheckOut(): void {
+      this.showCardDetails = true;
+      this.message = "You need to login before you can place an order";
 
-  // Method to simulate cart load (for testing purpose)
-  loadCart(): void {
-    this.cart = this.cartService.getCart();
-    this.calculateTotalPrice();
+    }
+
+    // Method to simulate cart load (for testing purpose)
+    loadCart(): void {
+      this.cart = this.cartService.getCart();
+      this.calculateTotalPrice();
+    }
   }
-}

@@ -1,17 +1,28 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { error } from 'console';
+import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NgClass, CommonModule } from '@angular/common';
+
+interface PaymentModel {
+  name: string;
+  cardNumber: string;
+  expiry: string;
+  cvv: string;
+  amount: string;
+}
 
 @Component({
   selector: 'app-card-payment',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NgClass, CommonModule],
   templateUrl: './card-payment.component.html',
-  styleUrl: './card-payment.component.css'
+  styleUrls: ['./card-payment.component.css']
 })
 export class CardPaymentComponent {
-  paymentModel = {
+  @Input() total!: number;
+  submitted = false;
+
+  paymentModel: PaymentModel = {
     name: '',
     cardNumber: '',
     expiry: '',
@@ -19,16 +30,10 @@ export class CardPaymentComponent {
     amount: ''
   };
 
-  constructor(private http: HttpClient){}
+  constructor(private router: Router) {}
 
-  onSubmit(){
-    this.http.post('/processPayment', this.paymentModel)
-      .subscribe(response => {
-        //handle response from server
-        console.log('Payment successfully processed', response);
-      }, error => {
-        console.log('Payment failed processing', error);
-      });
+  onSubmit() {
+    this.submitted = true;
+    this.router.navigate(['/payment-success']);
   }
-
 }

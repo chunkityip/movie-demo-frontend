@@ -1,39 +1,41 @@
 <h2>Select a Movie</h2>
 
 <div class="search-container">
-    <input 
-      type="text" 
-      [(ngModel)]="searchQuery" 
-      placeholder="Search for movies..." 
-      (keyup.enter)="searchMovies()" 
-    />
-    <button (click)="searchMovies()">Search</button> <!-- Button to trigger search -->
-  </div>
-
-<!-- <div class="movies">
-    <ul class="movie-list">
-        <li *ngFor="let post of data">
-            <img src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/football%2Csoccer%2Csport%2Cevent-design-template-31189bebe42fe7f743327895731b60ae_screen.jpg?ts=1698356519">
-            <h3>{{post.title}}</h3>
-            <p> {{ post.description }} </p>
-        </li>
-    </ul>
-</div> -->
+  <input
+    type="text"
+    [(ngModel)]="searchQuery"
+    placeholder="Search for movies..."
+    (keyup.enter)="searchMovies()"
+  />
+  <button (click)="searchMovies()">Search</button>
+</div>
 
 <div class="movies">
-    <ul class="movie-list">
-      <li *ngFor="let post of filteredMovies" (click)="fetchMovieDetails(post.id)">
-        <img 
-        *ngIf="post.coverImageBase64; else placeholder" 
-        [src]="post.coverImageBase64" 
-        alt="{{ post.title }}"
+  <ul class="movie-list">
+    <li *ngFor="let post of filteredMovies">
+      <button
+        class="movie-button"
+        (click)="navigateToSeatSelection(post.id)"
+        [attr.aria-label]="'Select ' + post.title"
       >
-        <p>{{post.title}}</p>
-      </li>
-    </ul>
-</div> 
+        <ng-container [ngTemplateOutlet]="post.coverImageBase64 ? withCoverImage : withoutCoverImage"
+                      [ngTemplateOutletContext]="{ $implicit: post }">
+        </ng-container>
+        <p>{{ post.title }}</p>
+      </button>
+    </li>
+  </ul>
+</div>
 
+<ng-template #withCoverImage let-post>
+  <img [src]="post.coverImageBase64" [alt]="post.title">
+</ng-template>
 
-<ng-template #placeholder>
-    <img src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/football%2Csoccer%2Csport%2Cevent-design-template-31189bebe42fe7f743327895731b60ae_screen.jpg" alt="Default Image">
+<ng-template #withoutCoverImage let-post>
+  <img
+    [src]="post.id === 1 ?
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcJVeh1QY5mivp7wyeRfF081uMaVyU2wAzww&s' :
+      'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/football%2Csoccer%2Csport%2Cevent-design-template-31189bebe42fe7f743327895731b60ae_screen.jpg'"
+    [alt]="post.title"
+  >
 </ng-template>
