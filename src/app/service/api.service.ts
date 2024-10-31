@@ -54,10 +54,6 @@ export class ApiService {
     return this.http.get(`${ApiService.BASE_URL}/user/profile/${adminId}`);
   }
 
-  addNewShowing(showingData: AddShowingDTO): Observable<any> {
-    return this.http.post(`${ApiService.BASE_URL}/add_new/${showingData.movieId}`, showingData);
-  }
-
   /** Movies */
   getAllMovies(): Observable<Movie[]> {
     return this.http.get<Movie[]>(`${ApiService.BASE_URL}/movie/allMovies`)
@@ -71,6 +67,10 @@ export class ApiService {
   /** Admin */
   createMovie(formData: FormData): Observable<any> {
     return this.http.post(`${ApiService.BASE_URL}/movie/create`, formData);
+  }
+
+  addNewShowing(showingData: AddShowingDTO): Observable<any> {
+    return this.http.post(`${ApiService.BASE_URL}/add_new/${showingData.movieId}`, showingData);
   }
 
   getMovieById(id: number): Observable<Movie> {

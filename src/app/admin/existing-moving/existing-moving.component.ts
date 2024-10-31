@@ -3,62 +3,51 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../service/api.service';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 interface Movie {
   id: number;
   title: string;
   description: string;
-  // Make all image-related properties optional since they might not always be present
-  coverImage: string;
-  coverImageBase64?: string;
-  image?: string;  // Changed from required to optional
-  imageUrl?: string;  // Changed from required to optional
-  price?: number;
+  coverImage?: string;
 }
 
-
-interface TimeSlot {
-  time: string;
-  available: boolean;
+interface ShowingResponse {
+  id: number;
+  movieId: number;
+  movieTitle: string;
+  showingDate: string;
+  showingTime: string;
+  seats: any;
 }
 
 @Component({
   selector: 'app-existing-movie',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './existing-moving.component.html',
   styleUrls: ['./existing-moving.component.css']
 })
 export class ExistingMovieComponent implements OnInit {
   movies: Movie[] = [];
   currentMovieIndex = 0;
-  selectedDate: string = '';
-  selectedTime: string = '';
   showingForm: FormGroup;
-  weekDays: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  calendarDays: number[] = Array.from({ length: 30 }, (_, i) => i + 1);
-  timeSlots: TimeSlot[] = [
-    { time: '10:00', available: true },
-    { time: '12:30', available: true },
-    { time: '15:00', available: true },
-    { time: '17:30', available: true },
-    { time: '20:00', available: true },
-    { time: '22:30', available: true }
-  ];
+
+  currentDate: string = new Date().toISOString().split('T')[0];
+  minDate: string = this.currentDate;
 
   constructor(
     private router: Router,
-    private http: HttpClient,
     private apiService: ApiService,
-    private fb: FormBuilder,
-    private sanitizer: DomSanitizer
+    private fb: FormBuilder
   ) {
     this.showingForm = this.fb.group({
-      movieId: ['', Validators.required],
-      date: ['', Validators.required],
-      time: ['', Validators.required],
+      movieId: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      showingDate: [this.currentDate, Validators.required],
+      showingTime: ['', [
+        Validators.required,
+        Validators.pattern('^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$')
+      ]]
     });
   }
 
@@ -69,19 +58,7 @@ export class ExistingMovieComponent implements OnInit {
   loadMovies(): void {
     this.apiService.getAllMovies().subscribe({
       next: (movies) => {
-        this.movies = movies.map(movie => ({
-          ...movie,
-          // Ensure we're passing all required properties
-          id: movie.id,
-          title: movie.title,
-          description: movie.description,
-          coverImage: this.getImageUrl(movie.coverImageBase64)
-        }));
-        if (movies.length > 0) {
-          this.showingForm.patchValue({
-            movieId: movies[0].id
-          });
-        }
+        this.movies = movies;
       },
       error: (err) => {
         console.error('Error fetching movies:', err);
@@ -89,71 +66,70 @@ export class ExistingMovieComponent implements OnInit {
     });
   }
 
-  getImageUrl(imageData: string | undefined): string {
-    if (!imageData) return 'assets/placeholder-image.png';
-    if (imageData.startsWith('http') || imageData.startsWith('/')) {
-      return imageData;
-    }
-    if (!imageData.startsWith('data:image')) {
-      return `data:image/jpeg;base64,${imageData}`;
-    }
-    return imageData;
-  }
-
   previousMovie(): void {
     if (this.currentMovieIndex > 0) {
       this.currentMovieIndex--;
-      this.updateFormMovieId();
     }
   }
 
   nextMovie(): void {
-    if (this.currentMovieIndex < this.movies.length - 1) {
+    if (this.currentMovieIndex < this.movies.length - 5) {
       this.currentMovieIndex++;
-      this.updateFormMovieId();
     }
   }
 
-  private updateFormMovieId(): void {
-    this.showingForm.patchValue({
-      movieId: this.movies[this.currentMovieIndex].id
-    });
-  }
+  // Helper method to format time input
+  formatTimeInput(event: any): void {
+    let input = event.target;
+    let value = input.value.replace(/\D/g, ''); // Remove non-digits
 
-  handleImageError(event: Event): void {
-    const imgElement = event.target as HTMLImageElement;
-    imgElement.style.display = 'none';
-    const container = imgElement.parentElement;
-    if (container) {
-      container.classList.add('no-image');
+    if (value.length > 4) {
+      value = value.substr(0, 4);
     }
-  }
 
-  selectDate(date: string): void {
-    this.selectedDate = date;
-    this.showingForm.patchValue({ date });
-  }
+    if (value.length >= 2) {
+      const hours = parseInt(value.substr(0, 2));
+      if (hours > 23) {
+        value = '23' + value.substr(2);
+      }
+      if (value.length >= 3) {
+        const minutes = parseInt(value.substr(2));
+        if (minutes > 59) {
+          value = value.substr(0, 2) + '59';
+        }
+      }
+      value = value.substr(0, 2) + ':' + value.substr(2);
+    }
 
-  selectTime(time: string): void {
-    this.selectedTime = time;
-    this.showingForm.patchValue({ time });
+    input.value = value;
+    this.showingForm.get('showingTime')?.setValue(value);
   }
 
   handleSubmit(): void {
     if (this.showingForm.valid) {
       const showingData = {
-        movieId: this.movies[this.currentMovieIndex].id,
-        date: this.selectedDate,
-        timeSlot: { time: this.selectedTime }
+        movieId: parseInt(this.showingForm.get('movieId')?.value),
+        date: this.showingForm.get('showingDate')?.value,
+        timeSlot: {
+          time: this.showingForm.get('showingTime')?.value,
+          available: true
+        }
       };
 
       this.apiService.addNewShowing(showingData).subscribe({
-        next: (response) => {
+        next: (response: ShowingResponse) => {
           console.log('Showing added successfully', response);
           this.router.navigate(['/admin']);
         },
         error: (error) => {
           console.error('Error adding showing:', error);
+        }
+      });
+    } else {
+      Object.keys(this.showingForm.controls).forEach(key => {
+        const control = this.showingForm.get(key);
+        if (control?.invalid) {
+          control.markAsTouched();
         }
       });
     }
