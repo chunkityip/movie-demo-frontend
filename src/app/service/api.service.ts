@@ -70,8 +70,9 @@ export class ApiService {
   }
 
   addNewShowing(showingData: AddShowingDTO): Observable<any> {
-    return this.http.post(`${ApiService.BASE_URL}/add_new/${showingData.movieId}`, showingData);
+    return this.http.post(`${ApiService.BASE_URL}/movie/${showingData.movieId}/showings/add_new`, showingData);
   }
+
 
   getMovieById(id: number): Observable<Movie> {
     return this.http.get<Movie>(`${ApiService.BASE_URL}/movie/${id}`);
