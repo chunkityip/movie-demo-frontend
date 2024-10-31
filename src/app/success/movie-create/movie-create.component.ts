@@ -49,7 +49,7 @@ export class MovieCreateComponent implements OnInit {
 
   onAddShowings() {
     if (this.movie) {
-      this.router.navigate(['/admin/add-showing', this.movie.id]);
+      this.router.navigate(['/admin/existing-movie']);
     }
   }
 

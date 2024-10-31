@@ -4,15 +4,15 @@
   <div *ngIf="!isAdminLoggedIn">
     <!-- Show this section when no admin is logged in (public navigation) -->
     <button (click)="navigateToMovies()">See a Movie</button>
-    <button (click)="handleSearchSubmit()">Find Theater</button>
-    <button (click)="handleSearchSubmit()">Bundles</button>
+<!--    <button (click)="handleSearchSubmit()">Find Theater</button>-->
+<!--    <button (click)="handleSearchSubmit()">Bundles</button>-->
   </div>
 
   <div *ngIf="!isAdminLoggedIn">
     <!-- Show these buttons when no admin is logged in -->
     <button (click)="handleLogin()">Sign In</button>
-    <button (click)="handleRegister()">Join Now</button>
-    <button routerLink="/cart">Cart</button>
+<!--    <button (click)="handleRegister()">Join Now</button>-->
+<!--    <button routerLink="/cart">Cart</button>-->
   </div>
 
   <div *ngIf="isAdminLoggedIn">
