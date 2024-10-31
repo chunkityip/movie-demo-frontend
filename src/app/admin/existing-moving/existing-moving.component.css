@@ -27,28 +27,38 @@ h2 {
   margin-bottom: 1.5rem;
 }
 
-/* Movie Carousel Styles */
 .movie-carousel {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin: 2rem 0;
+  overflow-x: auto; /* Allows scrolling if more movies than space allows */
 }
 
 .movie-info {
-  flex-grow: 1;
-  padding: 1rem; /* Reduced padding */
-  background-color: #fafafa; /* Slightly lighter background for subtlety */
-  border-radius: 6px; /* Smaller radius for a more compact look */
-  max-width: 300px; /* Optional: set a maximum width if needed */
+  flex: 1 1 20%; /* Allows up to 5 movies per row with space */
+  padding: 1rem;
+  background-color: #fafafa;
+  border-radius: 6px;
+  max-width: 220px;
 }
 
 .movie-info h3 {
   margin-top: 0;
   color: #333;
-  font-size: 1rem; /* Smaller font size */
-  font-weight: 500; /* Medium weight for better readability in smaller size */
+  font-size: 1rem;
+  font-weight: 500;
 }
+
+.carousel-button {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #f61e3e;
+  padding: 0 1rem;
+  transition: color 0.2s;
+}
+
 
 
 .movie-details {

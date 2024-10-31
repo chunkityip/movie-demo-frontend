@@ -60,7 +60,7 @@ export class ApiService {
 
   /** Movies */
   getAllMovies(): Observable<Movie[]> {
-    return this.http.get<Movie[]>(`${ApiService.BASE_URL}/movie`); // Updated to /movie
+    return this.http.get<Movie[]>(`${ApiService.BASE_URL}/movie/allMovies`)
   }
 
   /** Shopping cart */
